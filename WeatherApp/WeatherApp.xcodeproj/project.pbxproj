@@ -17,6 +17,8 @@
 		6D4FBFED2875EA4D00C791EB /* WeatherAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4FBFEC2875EA4D00C791EB /* WeatherAppTests.swift */; };
 		6D4FBFF72875EA4D00C791EB /* WeatherAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4FBFF62875EA4D00C791EB /* WeatherAppUITests.swift */; };
 		6D4FBFF92875EA4D00C791EB /* WeatherAppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4FBFF82875EA4D00C791EB /* WeatherAppUITestsLaunchTests.swift */; };
+		6D4FC0092875EC4600C791EB /* WeatherModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4FC0082875EC4600C791EB /* WeatherModel.swift */; };
+		6D4FC00B2875EC5800C791EB /* WeatherViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4FC00A2875EC5800C791EB /* WeatherViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +53,9 @@
 		6D4FBFF22875EA4D00C791EB /* WeatherAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WeatherAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D4FBFF62875EA4D00C791EB /* WeatherAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherAppUITests.swift; sourceTree = "<group>"; };
 		6D4FBFF82875EA4D00C791EB /* WeatherAppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherAppUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		6D4FC0082875EC4600C791EB /* WeatherModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherModel.swift; sourceTree = "<group>"; };
+		6D4FC00A2875EC5800C791EB /* WeatherViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherViewModel.swift; sourceTree = "<group>"; };
+		6D4FC00C2875F44900C791EB /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,12 +106,8 @@
 		6D4FBFD12875EA4C00C791EB /* WeatherApp */ = {
 			isa = PBXGroup;
 			children = (
-				6D4FBFD22875EA4C00C791EB /* AppDelegate.swift */,
-				6D4FBFD42875EA4C00C791EB /* SceneDelegate.swift */,
-				6D4FBFD62875EA4C00C791EB /* ViewController.swift */,
-				6D4FBFD82875EA4C00C791EB /* Main.storyboard */,
-				6D4FBFDE2875EA4D00C791EB /* Assets.xcassets */,
-				6D4FBFE02875EA4D00C791EB /* LaunchScreen.storyboard */,
+				6D4FC0072875EB6400C791EB /* Source */,
+				6D4FC0052875EB5000C791EB /* MVVM */,
 				6D4FBFE32875EA4D00C791EB /* Info.plist */,
 				6D4FBFDB2875EA4C00C791EB /* WeatherApp.xcdatamodeld */,
 			);
@@ -128,6 +129,29 @@
 				6D4FBFF82875EA4D00C791EB /* WeatherAppUITestsLaunchTests.swift */,
 			);
 			path = WeatherAppUITests;
+			sourceTree = "<group>";
+		};
+		6D4FC0052875EB5000C791EB /* MVVM */ = {
+			isa = PBXGroup;
+			children = (
+				6D4FBFD62875EA4C00C791EB /* ViewController.swift */,
+				6D4FBFD82875EA4C00C791EB /* Main.storyboard */,
+				6D4FC0082875EC4600C791EB /* WeatherModel.swift */,
+				6D4FC00A2875EC5800C791EB /* WeatherViewModel.swift */,
+				6D4FC00C2875F44900C791EB /* MyPlayground.playground */,
+			);
+			path = MVVM;
+			sourceTree = "<group>";
+		};
+		6D4FC0072875EB6400C791EB /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				6D4FBFD22875EA4C00C791EB /* AppDelegate.swift */,
+				6D4FBFD42875EA4C00C791EB /* SceneDelegate.swift */,
+				6D4FBFDE2875EA4D00C791EB /* Assets.xcassets */,
+				6D4FBFE02875EA4D00C791EB /* LaunchScreen.storyboard */,
+			);
+			path = Source;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -262,7 +286,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				6D4FBFDD2875EA4C00C791EB /* WeatherApp.xcdatamodeld in Sources */,
+				6D4FC00B2875EC5800C791EB /* WeatherViewModel.swift in Sources */,
 				6D4FBFD72875EA4C00C791EB /* ViewController.swift in Sources */,
+				6D4FC0092875EC4600C791EB /* WeatherModel.swift in Sources */,
 				6D4FBFD32875EA4C00C791EB /* AppDelegate.swift in Sources */,
 				6D4FBFD52875EA4C00C791EB /* SceneDelegate.swift in Sources */,
 			);
