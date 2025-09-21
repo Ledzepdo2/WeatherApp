@@ -1,0 +1,50 @@
+name: iOS CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-and-test:
+    name: Build & Test (iOS)
+    runs-on: macos-13
+
+    steps:
+      - name: 🔄 Checkout repo
+        uses: actions/checkout@v4
+
+      - name: 🍎 Set Xcode version
+        run: sudo xcode-select -s /Applications/Xcode_16.0.app
+
+      - name: ⚙️ Setup Ruby for bundler (optional)
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.2
+
+      - name: 💎 Install dependencies (Fastlane, SwiftLint)
+        run: |
+          gem install bundler
+          bundle install
+          brew install swiftlint
+
+      - name: 🧼 Lint with SwiftLint
+        run: swiftlint --strict
+
+      - name: 🛠 Build App
+        run: |
+          xcodebuild \
+            -scheme "WeatherApp" \
+            -sdk iphonesimulator \
+            -destination 'platform=iOS Simulator,name=iPhone 15,OS=18.0' \
+            clean build CODE_SIGNING_ALLOWED=NO
+
+      - name: ✅ Run Unit Tests
+        run: |
+          xcodebuild \
+            -scheme "WeatherApp" \
+            -sdk iphonesimulator \
+            -destination 'platform=iOS Simulator,name=iPhone 15,OS=18.0' \
+            test CODE_SIGNING_ALLOWED=NO
+
