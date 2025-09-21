@@ -58,7 +58,6 @@ opt_in_rules:
   - vertical_whitespace_closing_braces
   - vertical_whitespace_opening_braces
   - yoda_condition
-  - unused_declaration # ayuda a detectar código muerto
   - private_outlet # fuerza IBOutlet privados
   - switch_case_alignment
   - strong_iboutlet
@@ -146,6 +145,10 @@ custom_rules:
     regex: "try!"
     message: "Avoid 'try!'. Handle errors explicitly or use optional try?"
     severity: error
+
+# Analyzer rules (requieren 'swiftlint analyze')
+analyzer_rules:
+  - unused_declaration # ayuda a detectar código muerto
 
 # Report format
 reporter: "xcode"

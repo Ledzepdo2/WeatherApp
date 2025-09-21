@@ -102,6 +102,7 @@
 				E531DAD02E7FA6EF004CAAD1 /* Sources */,
 				E531DAD12E7FA6EF004CAAD1 /* Frameworks */,
 				E531DAD22E7FA6EF004CAAD1 /* Resources */,
+				E54DC6CE2E7FBB8C00A6D5A6 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -195,6 +196,9 @@
 			);
 			mainGroup = E531DACB2E7FA6EF004CAAD1;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				E50F20892E7FB7FF00370B0C /* XCRemoteSwiftPackageReference "SwiftLint" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = E531DAD52E7FA6EF004CAAD1 /* Products */;
 			projectDirPath = "";
@@ -230,6 +234,31 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		E54DC6CE2E7FBB8C00A6D5A6 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/WeatherApp/.swiftlint.yml",
+				"$(SRCROOT)/WeatherApp",
+				"$(SRCROOT)/WeatherAppTests",
+				"$(SRCROOT)/WeatherAppUITests",
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/swiftlint-output.log",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# SwiftLint Production Script\nset +e  # Handle errors manually\n\n# Create output log\nmkdir -p \"${DERIVED_FILE_DIR}\"\nLOG_FILE=\"${DERIVED_FILE_DIR}/swiftlint-output.log\"\n\necho \"🔍 SwiftLint - Running with your configuration\" | tee \"$LOG_FILE\"\n\n# Skip if BUILD_DIR not available\nif [[ -z \"${BUILD_DIR}\" ]]; then\n    echo \"⚠️ BUILD_DIR undefined - skipping SwiftLint\" | tee -a \"$LOG_FILE\"\n    exit 0\nfi\n\n# Check config file\nCONFIG_PATH=\"${SRCROOT}/WeatherApp/.swiftlint.yml\"\nif [[ ! -f \"$CONFIG_PATH\" ]]; then\n    echo \"❌ SwiftLint config not found: $CONFIG_PATH\" | tee -a \"$LOG_FILE\"\n    exit 0\nfi\n\necho \"✅ Using config: $CONFIG_PATH\" | tee -a \"$LOG_FILE\"\n\n# Find SwiftLint\nSWIFTLINT_PATH=\"/opt/homebrew/bin/swiftlint\"\nif [[ ! -x \"$SWIFTLINT_PATH\" ]]; then\n    SWIFTLINT_PATH=\"/usr/local/bin/swiftlint\"\nfi\n\nif [[ ! -x \"$SWIFTLINT_PATH\" ]]; then\n    SWIFTLINT_PATH=\"$(which swiftlint 2>/dev/null)\"\nfi\n\nif [[ ! -x \"$SWIFTLINT_PATH\" ]]; then\n    echo \"⚠️ SwiftLint not found - install with: brew install swiftlint\" | tee -a \"$LOG_FILE\"\n    exit 0\nfi\n\necho \"🚀 Running SwiftLint: $SWIFTLINT_PATH\" | tee -a \"$LOG_FILE\"\n\n# Change to project directory for correct relative paths\ncd \"${SRCROOT}/WeatherApp\"\n\n# Run SwiftLint with your config\n\"$SWIFTLINT_PATH\" lint --config \".swiftlint.yml\" --reporter xcode 2>&1 | tee -a \"$LOG_FILE\"\nSWIFTLINT_RESULT=${PIPESTATUS[0]}\n\nif [[ $SWIFTLINT_RESULT -eq 0 ]]; then\n    echo \"✅ SwiftLint: No issues found\" | tee -a \"$LOG_FILE\"\nelif [[ $SWIFTLINT_RESULT -eq 2 ]]; then\n    echo \"⚠️ SwiftLint: Found warnings/errors (see above)\" | tee -a \"$LOG_FILE\"\n    # Don't fail build for SwiftLint violations - just show them\nelse\n    echo \"❌ SwiftLint: Execution error (code: $SWIFTLINT_RESULT)\" | tee -a \"$LOG_FILE\"\nfi\n\n# Always succeed to prevent build failure\necho \"✅ SwiftLint script completed\" | tee -a \"$LOG_FILE\"\nexit 0\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		E531DAD02E7FA6EF004CAAD1 /* Sources */ = {
@@ -578,6 +607,17 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		E50F20892E7FB7FF00370B0C /* XCRemoteSwiftPackageReference "SwiftLint" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/SwiftLint";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.61.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
 	};
 	rootObject = E531DACC2E7FA6EF004CAAD1 /* Project object */;
 }
