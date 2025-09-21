@@ -244,7 +244,7 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"$(SRCROOT)/WeatherApp/.swiftlint.yml",
+				"$(SRCROOT)/.swiftlint.yml",
 				"$(SRCROOT)/WeatherApp",
 				"$(SRCROOT)/WeatherAppTests",
 				"$(SRCROOT)/WeatherAppUITests",
@@ -256,7 +256,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# SwiftLint Production Script\nset +e  # Handle errors manually\n\n# Create output log\nmkdir -p \"${DERIVED_FILE_DIR}\"\nLOG_FILE=\"${DERIVED_FILE_DIR}/swiftlint-output.log\"\n\necho \"🔍 SwiftLint - Running with your configuration\" | tee \"$LOG_FILE\"\n\n# Skip if BUILD_DIR not available\nif [[ -z \"${BUILD_DIR}\" ]]; then\n    echo \"⚠️ BUILD_DIR undefined - skipping SwiftLint\" | tee -a \"$LOG_FILE\"\n    exit 0\nfi\n\n# Check config file\nCONFIG_PATH=\"${SRCROOT}/WeatherApp/.swiftlint.yml\"\nif [[ ! -f \"$CONFIG_PATH\" ]]; then\n    echo \"❌ SwiftLint config not found: $CONFIG_PATH\" | tee -a \"$LOG_FILE\"\n    exit 0\nfi\n\necho \"✅ Using config: $CONFIG_PATH\" | tee -a \"$LOG_FILE\"\n\n# Find SwiftLint\nSWIFTLINT_PATH=\"/opt/homebrew/bin/swiftlint\"\nif [[ ! -x \"$SWIFTLINT_PATH\" ]]; then\n    SWIFTLINT_PATH=\"/usr/local/bin/swiftlint\"\nfi\n\nif [[ ! -x \"$SWIFTLINT_PATH\" ]]; then\n    SWIFTLINT_PATH=\"$(which swiftlint 2>/dev/null)\"\nfi\n\nif [[ ! -x \"$SWIFTLINT_PATH\" ]]; then\n    echo \"⚠️ SwiftLint not found - install with: brew install swiftlint\" | tee -a \"$LOG_FILE\"\n    exit 0\nfi\n\necho \"🚀 Running SwiftLint: $SWIFTLINT_PATH\" | tee -a \"$LOG_FILE\"\n\n# Change to project directory for correct relative paths\ncd \"${SRCROOT}/WeatherApp\"\n\n# Run SwiftLint with your config\n\"$SWIFTLINT_PATH\" lint --config \".swiftlint.yml\" --reporter xcode 2>&1 | tee -a \"$LOG_FILE\"\nSWIFTLINT_RESULT=${PIPESTATUS[0]}\n\nif [[ $SWIFTLINT_RESULT -eq 0 ]]; then\n    echo \"✅ SwiftLint: No issues found\" | tee -a \"$LOG_FILE\"\nelif [[ $SWIFTLINT_RESULT -eq 2 ]]; then\n    echo \"⚠️ SwiftLint: Found warnings/errors (see above)\" | tee -a \"$LOG_FILE\"\n    # Don't fail build for SwiftLint violations - just show them\nelse\n    echo \"❌ SwiftLint: Execution error (code: $SWIFTLINT_RESULT)\" | tee -a \"$LOG_FILE\"\nfi\n\n# Always succeed to prevent build failure\necho \"✅ SwiftLint script completed\" | tee -a \"$LOG_FILE\"\nexit 0\n";
+			shellScript = "# SwiftLint Production Script (modo estricto para alinear con CI)\nset +e  # No detener el build por errores de SwiftLint\n\n# Crear directorio de logs\nmkdir -p \"${DERIVED_FILE_DIR}\"\nLOG_FILE=\"${DERIVED_FILE_DIR}/swiftlint-output.log\"\n\necho \"🔍 SwiftLint - Ejecutando con configuración personalizada\" | tee \"$LOG_FILE\"\n\n# Verifica que BUILD_DIR exista (indica que es un build válido)\nif [[ -z \"${BUILD_DIR}\" ]]; then\n    echo \"⚠️ BUILD_DIR no definido - omitiendo SwiftLint\" | tee -a \"$LOG_FILE\"\n    exit 0\nfi\n\n# Ruta del archivo de configuración\nCONFIG_PATH=\"${PROJECT_DIR}/.swiftlint.yml\"\nif [[ ! -f \"$CONFIG_PATH\" ]]; then\n    echo \"❌ No se encontró archivo de configuración: $CONFIG_PATH\" | tee -a \"$LOG_FILE\"\n    exit 0\nfi\n\n# Asegura permisos de lectura\nchmod 644 \"$CONFIG_PATH\"\necho \"✅ Configuración detectada en: $CONFIG_PATH\" | tee -a \"$LOG_FILE\"\n\n# Localiza swiftlint\nSWIFTLINT_PATH=\"$(which swiftlint 2>/dev/null)\"\nif [[ ! -x \"$SWIFTLINT_PATH\" ]]; then\n    for path in /opt/homebrew/bin/swiftlint /usr/local/bin/swiftlint; do\n        if [[ -x \"$path\" ]]; then\n            SWIFTLINT_PATH=\"$path\"\n            break\n        fi\n    done\nfi\n\nif [[ ! -x \"$SWIFTLINT_PATH\" ]]; then\n    echo \"⚠️ No se encontró SwiftLint - instala con: brew install swiftlint\" | tee -a \"$LOG_FILE\"\n    exit 0\nfi\n\necho \"🚀 Ejecutando SwiftLint desde: $SWIFTLINT_PATH\" | tee -a \"$LOG_FILE\"\n\n# Ir al directorio del proyecto para rutas relativas\ncd \"$PROJECT_DIR\"\n\n# Ejecutar SwiftLint en modo estricto\n\"$SWIFTLINT_PATH\" lint --config \"$CONFIG_PATH\" --reporter xcode --strict 2>&1 | tee -a \"$LOG_FILE\"\nSWIFTLINT_RESULT=${PIPESTATUS[0]}\n\n# Interpretar el resultado\nif [[ $SWIFTLINT_RESULT -eq 0 ]]; then\n    echo \"✅ SwiftLint: Sin violaciones\" | tee -a \"$LOG_FILE\"\nelif [[ $SWIFTLINT_RESULT -eq 2 ]]; then\n    echo \"⚠️ SwiftLint: Se encontraron advertencias/errores (ver arriba)\" | tee -a \"$LOG_FILE\"\nelse\n    echo \"❌ SwiftLint: Falló con código $SWIFTLINT_RESULT\" | tee -a \"$LOG_FILE\"\nfi\n\n# No bloquear el build aunque haya errores\necho \"🏁 SwiftLint finalizado\" | tee -a \"$LOG_FILE\"\nexit 0\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -434,6 +434,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -466,6 +467,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
