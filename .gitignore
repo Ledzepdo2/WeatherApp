@@ -1,62 +1,86 @@
-# Xcode
-#
-# gitignore contributors: remember to update Global/Xcode.gitignore, Objective-C.gitignore & Swift.gitignore
+# ===== macOS =====
+.DS_Store
+.AppleDouble
+.Spotlight-V100
+.Trashes
 
-## User settings
+# ===== Xcode (usuario / temporales) =====
+build/
+DerivedData/
+*.xcuserstate
 xcuserdata/
+*.xccheckout
+*.xcscmblueprint
+*.moved-aside
 
-## Obj-C/Swift specific
-*.hmap
+# Mantén esquemas compartidos; ignora los de usuario
+*.xcodeproj/*/xcuserdata/
+*.xcodeproj/project.xcworkspace/xcuserdata/
 
-## App packaging
+# ===== Empaquetado / Artefactos =====
 *.ipa
-*.dSYM.zip
+*.xcarchive
 *.dSYM
+*.dSYM.zip
 
-## Playgrounds
+# ===== Playgrounds =====
 timeline.xctimeline
 playground.xcworkspace
 
-# Swift Package Manager
-#
-# Add this line if you want to avoid checking in source code from Swift Package Manager dependencies.
-# Packages/
-# Package.pins
-# Package.resolved
-# *.xcodeproj
-#
-# Xcode automatically generates this directory with a .xcworkspacedata file and xcuserdata
-# hence it is not needed unless you have added a package configuration file to your project
-# .swiftpm
+# ===== Swift / Obj-C =====
+*.hmap
 
+# ===== Swift Package Manager =====
 .build/
+.swiftpm/
+SourcePackages/
+# Consejo: SÍ conviene versionar Package.resolved en apps.
+# Si prefieres no versionarlo, descomenta la línea siguiente:
+# Package.resolved
 
-# CocoaPods
-#
-# We recommend against adding the Pods directory to your .gitignore. However
-# you should judge for yourself, the pros and cons are mentioned at:
-# https://guides.cocoapods.org/using/using-cocoapods.html#should-i-check-the-pods-directory-into-source-control
-#
-# Pods/
-#
-# Add this line if you want to avoid checking in source code from the Xcode workspace
-# *.xcworkspace
+# ===== CocoaPods (opcional) =====
+# Si usas Pods, normalmente SÍ se versiona Podfile.lock y el workspace.
+Pods/
+*.xcworkspace
+# Podfile.lock  # <-- No lo ignores si usas CocoaPods correctamente
 
-# Carthage
-#
-# Add this line if you want to avoid checking in source code from Carthage dependencies.
-# Carthage/Checkouts
-
+# ===== Carthage (opcional) =====
 Carthage/Build/
+# Carthage/Checkouts  # descomenta si no quieres fuentes locales
 
-# fastlane
-#
-# It is recommended to not store the screenshots in the git repo.
-# Instead, use fastlane to re-generate the screenshots whenever they are needed.
-# For more information about the recommended setup visit:
-# https://docs.fastlane.tools/best-practices/source-control/#source-control
+# ===== Accio (opcional) =====
+Dependencies/
+.accio/
 
+# ===== Tuist (opcional) =====
+Tuist/Dependencies/
+Tuist/.build/
+
+# ===== Fastlane =====
 fastlane/report.xml
 fastlane/Preview.html
-fastlane/screenshots/**/*.png
+fastlane/screenshots
 fastlane/test_output
+
+# ===== Herramientas de calidad =====
+.swiftlint.cache
+# .swiftlint.yml   # (mantener en repo)
+# .swiftformat      # (mantener en repo)
+
+# ===== Cobertura / Tests =====
+*.xccovreport
+*.xccovarchive
+coverage/
+test-output/
+reports/
+
+# ===== Logs / Miscelánea =====
+*.log
+
+# ===== Bases de datos locales (p.ej. CoreData/SwiftData en debug) =====
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
+
+# ===== Archivos de estado de Previews =====
+.swiftpm/xcode/xcshareddata/Previews/
