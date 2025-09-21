@@ -1,0 +1,39 @@
+# SwiftLint configuration file
+# Para más opciones de configuración, visita: https://realm.github.io/SwiftLint/configuration.html
+
+# Incluir archivos específicos (opcional)
+included:
+  - WeatherApp
+  - WeatherAppTests
+  - WeatherAppUITests
+
+# Excluir archivos específicos (opcional)
+excluded:
+  - Carthage
+  - Pods
+  - Source/ExcludedFolder
+  - Source/ExcludedFile.swift
+
+# Configurar reglas específicas
+line_length: 120
+type_body_length: 300
+function_body_length: 100
+
+# Reglas deshabilitadas (opcional)
+disabled_rules:
+  # - trailing_whitespace # Descomenta si no quieres que revise espacios en blanco
+
+# Reglas habilitadas opcionalmente
+opt_in_rules:
+  - empty_count
+  - force_unwrapping
+  - implicitly_unwrapped_optional
+
+# Configuración de reglas específicas
+trailing_whitespace:
+  ignores_empty_lines: false
+  ignores_comments: true
+
+identifier_name:
+  min_length: 1
+  max_length: 40
