@@ -1,18 +1,20 @@
 //
-//  WeatherAppApp.swift
-//  WeatherApp
+//  App.swift
+//  weatherapp
 //
-//  Created by Jesus Perez on 20/09/25.
+//  Created by Jesus Perez on 29/09/2025
 //
 
 import SwiftUI
 import SwiftData
 
 @main
-struct WeatherAppApp: App {
+struct mvvmApp: App {
+    @StateObject private var coordinator = AppCoordinator()
+
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
-            Item.self
+            Item.self,
         ])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
 
@@ -25,8 +27,10 @@ struct WeatherAppApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            RootView()
+                .environmentObject(coordinator)
         }
         .modelContainer(sharedModelContainer)
     }
 }
+
