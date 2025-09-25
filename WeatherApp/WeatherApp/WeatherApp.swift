@@ -9,7 +9,9 @@ import SwiftUI
 import SwiftData
 
 @main
-struct WeatherAppApp: App {
+struct WeatherApp: App {
+    @StateObject private var coordinator = AppCoordinator()
+
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
             Item.self
@@ -25,7 +27,8 @@ struct WeatherAppApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            RootView()
+                .environmentObject(coordinator)
         }
         .modelContainer(sharedModelContainer)
     }
