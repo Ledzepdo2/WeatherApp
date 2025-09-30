@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		E557EC682E8B6F51004F1022 /* OpenMeteoSdk in Frameworks */ = {isa = PBXBuildFile; productRef = E557EC672E8B6F51004F1022 /* OpenMeteoSdk */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		E531DAE42E7FA6EF004CAAD1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -52,6 +56,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E557EC682E8B6F51004F1022 /* OpenMeteoSdk in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -113,6 +118,7 @@
 			);
 			name = WeatherApp;
 			packageProductDependencies = (
+				E557EC672E8B6F51004F1022 /* OpenMeteoSdk */,
 			);
 			productName = WeatherApp;
 			productReference = E531DAD42E7FA6EF004CAAD1 /* WeatherApp.app */;
@@ -198,6 +204,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				E50F20892E7FB7FF00370B0C /* XCRemoteSwiftPackageReference "SwiftLint" */,
+				E557EC662E8B6F51004F1022 /* XCRemoteSwiftPackageReference "sdk" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = E531DAD52E7FA6EF004CAAD1 /* Products */;
@@ -619,7 +626,23 @@
 				minimumVersion = 0.61.0;
 			};
 		};
+		E557EC662E8B6F51004F1022 /* XCRemoteSwiftPackageReference "sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/open-meteo/sdk.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		E557EC672E8B6F51004F1022 /* OpenMeteoSdk */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E557EC662E8B6F51004F1022 /* XCRemoteSwiftPackageReference "sdk" */;
+			productName = OpenMeteoSdk;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = E531DACC2E7FA6EF004CAAD1 /* Project object */;
 }
