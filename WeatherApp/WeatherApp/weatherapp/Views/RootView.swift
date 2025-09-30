@@ -10,21 +10,26 @@ import SwiftUI
 struct RootView: View {
     @EnvironmentObject private var coordinator: AppCoordinator
 
+    // Inyectamos dependencias aquí
+    private let locationService: LocationServicing = LocationService()
+    private let weatherService: WeatherServicing = WeatherService()
+
     var body: some View {
         NavigationStack(path: $coordinator.path) {
-            MainView()
+            MainView(vm: MainViewModel(location: locationService,
+                                       weather: weatherService))
                 .navigationDestination(for: Route.self) { route in
                     switch route {
-                    case .main:
-                        MainView()
-                    case .detail(let id):
-                        DetailView(itemID: id)
+                    case let .hourly(date, allHourly, title):
+                        HourlyDetailView(vm: HourlyViewModel(day: date,
+                                                             allHourly: allHourly,
+                                                             title: title))
                     }
                 }
         }
-        .onAppear { coordinator.start() }
     }
 }
+
 #Preview {
     RootView().environmentObject(AppCoordinator())
 }

@@ -9,28 +9,24 @@ import SwiftUI
 import SwiftData
 
 @main
-struct mvvmApp: App {
+struct WeatherAppApp: App {
     @StateObject private var coordinator = AppCoordinator()
 
-    var sharedModelContainer: ModelContainer = {
-        let schema = Schema([
-            Item.self,
-        ])
-        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
-
-        do {
-            return try ModelContainer(for: schema, configurations: [modelConfiguration])
-        } catch {
-            fatalError("Could not create ModelContainer: \(error)")
-        }
-    }()
+    private let locationService: LocationServicing = LocationService()
+    private let weatherService: WeatherServicing = WeatherService()
 
     var body: some Scene {
         WindowGroup {
-            RootView()
-                .environmentObject(coordinator)
+            NavigationStack(path: $coordinator.path) {
+                MainView(vm: .init(location: locationService, weather: weatherService))
+                    .navigationDestination(for: Route.self) { route in
+                        switch route {
+                        case let .hourly(date, allHourly, title):
+                            HourlyDetailView(vm: .init(day: date, allHourly: allHourly, title: title))
+                        }
+                    }
+            }
+            .environmentObject(coordinator)
         }
-        .modelContainer(sharedModelContainer)
     }
 }
-
