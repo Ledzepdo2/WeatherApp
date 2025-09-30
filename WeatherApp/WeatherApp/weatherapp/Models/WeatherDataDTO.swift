@@ -77,4 +77,12 @@ struct HourlyRowViewData: Identifiable, Hashable {
     let apparent: Float
     let precipitationProb: Float
     let cloudCover: Float
+
+    static func == (lhs: HourlyRowViewData, rhs: HourlyRowViewData) -> Bool {
+        lhs.id == rhs.id
+    }
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
 }
