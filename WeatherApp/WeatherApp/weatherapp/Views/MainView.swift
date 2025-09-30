@@ -30,7 +30,7 @@ struct MainView: View {
                 Button("Reintentar") { vm.onAppear() }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-        case let .loaded(dailies, hourly):
+        case let .loaded(dailies, _):
             List(dailies) { day in
                 HStack {
                     VStack(alignment: .leading) {
