@@ -8,6 +8,5 @@
 import Foundation
 
 enum Route: Hashable {
-    case main
-    case detail(id: UUID)
+    case hourly(date: Date, allHourly: [HourlyRowViewData], title: String)
 }

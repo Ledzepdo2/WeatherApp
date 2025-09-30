@@ -12,15 +12,8 @@ import Combine
 final class AppCoordinator: ObservableObject {
     @Published var path: [Route] = []
 
-    func start() {
-        // Ruta inicial
-        if path.isEmpty {
-            path = [.main]
-        }
-    }
-
-    func push(_ route: Route) {
-        path.append(route)
+    func showHourly(for day: Date, hourly: [HourlyRowViewData], title: String) {
+        path.append(.hourly(date: day, allHourly: hourly, title: title))
     }
 
     func pop() {
@@ -28,8 +21,10 @@ final class AppCoordinator: ObservableObject {
     }
 
     func popToRoot() {
-        path.removeAll()
-        path.append(.main)
+        path.removeAll() // Vuelve al MainView porque RootView siempre lo fija
+    }
+
+    func reset() {
+        path = []
     }
 }
-
